@@ -56,7 +56,7 @@ module Bittrex
     end
 
     def self.client
-      @client ||= Bittrex.client
+      @client ||= Bittrex::Client.new
     end
   end
 end

@@ -1,31 +1,26 @@
 require "bittrex/version"
+require 'bittrex/configuration'
+require 'bittrex/market'
+require 'bittrex/client'
+require 'bittrex/currency'
+require 'bittrex/deposit'
+require 'bittrex/order'
+require 'bittrex/quote'
+require 'bittrex/summary'
+require 'bittrex/wallet'
+require 'bittrex/withdrawl'
+
 
 module Bittrex
-  autoload :Market,        'bittrex/market'
-  autoload :Client,        'bittrex/client'
-  autoload :Configuration, 'bittrex/configuration'
-  autoload :Currency,      'bittrex/currency'
-  autoload :Deposit,       'bittrex/deposit'
-  autoload :Order,         'bittrex/order'
-  autoload :Quote,         'bittrex/quote'
-  autoload :Summary,       'bittrex/summary'
-  autoload :Wallet,        'bittrex/wallet'
-  autoload :Withdrawl,     'bittrex/withdrawl'
-
-  def self.client
-    @client ||= Client.new(configuration.auth)
-  end
-
-  def self.config
-    yield configuration
-    @client = Client.new(configuration.auth)
+  def self.configure
+    yield(self.configuration)
   end
 
   def self.configuration
-    Configuration.instance
+    @configuration ||= Configuration.new
   end
 
-  def self.root
-    File.expand_path('../..', __FILE__)
+  def self.configuration=(config)
+    @configuration = config
   end
 end

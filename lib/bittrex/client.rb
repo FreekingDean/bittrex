@@ -8,8 +8,8 @@ module Bittrex
     attr_reader :key, :secret
 
     def initialize(attrs = {})
-      @key    = attrs[:key]
-      @secret = attrs[:secret]
+      @key    = attrs[:key] || Bittrex.configuration.key
+      @secret = attrs[:secret] || Bittrex.configuration.secret
     end
 
     def get(path, params = {}, headers = {})
@@ -32,7 +32,7 @@ module Bittrex
     private
 
     def signature(url, nonce)
-      OpenSSL::HMAC.hexdigest('sha512', secret, "#{url}?apikey=#{key}&nonce=#{nonce}")
+     OpenSSL::HMAC.hexdigest('sha512', secret, "#{url}?apikey=#{key}&nonce=#{nonce}")
     end
 
     def connection
